@@ -1,0 +1,522 @@
+[
+    {
+        "id": 1,
+        "question": "What is the total number of customers?",
+        "category": "aggregation",
+        "difficulty": "easy",
+        "expected_columns": ["count"],
+        "expected_sql_contains": ["COUNT", "customers"]
+    },
+    {
+        "id": 2,
+        "question": "What are the top 5 products by revenue?",
+        "category": "ranking",
+        "difficulty": "medium",
+        "expected_columns": ["product_name", "revenue"],
+        "expected_sql_contains": ["SUM", "order_items", "products", "LIMIT 5"]
+    },
+    {
+        "id": 3,
+        "question": "Show monthly revenue for 2025",
+        "category": "date_filtering",
+        "difficulty": "medium",
+        "expected_columns": ["month", "revenue"],
+        "expected_sql_contains": ["2025", "SUM", "GROUP BY"]
+    },
+    {
+        "id": 4,
+        "question": "Which country has the highest number of customers?",
+        "category": "aggregation",
+        "difficulty": "easy",
+        "expected_columns": ["country", "count"],
+        "expected_sql_contains": ["COUNT", "customers", "country", "ORDER BY"]
+    },
+    {
+        "id": 5,
+        "question": "Who are the top 10 customers by total spending?",
+        "category": "ranking",
+        "difficulty": "medium",
+        "expected_columns": ["name", "total_spending"],
+        "expected_sql_contains": ["SUM", "customers", "orders", "LIMIT 10"]
+    },
+    {
+        "id": 6,
+        "question": "What is the average order value?",
+        "category": "aggregation",
+        "difficulty": "easy",
+        "expected_columns": ["avg_order_value"],
+        "expected_sql_contains": ["AVG", "orders"]
+    },
+    {
+        "id": 7,
+        "question": "Show revenue by product category",
+        "category": "grouping",
+        "difficulty": "medium",
+        "expected_columns": ["category", "revenue"],
+        "expected_sql_contains": ["SUM", "products", "category", "GROUP BY"]
+    },
+    {
+        "id": 8,
+        "question": "How many orders were placed in 2025?",
+        "category": "date_filtering",
+        "difficulty": "easy",
+        "expected_columns": ["count"],
+        "expected_sql_contains": ["COUNT", "orders", "2025"]
+    },
+    {
+        "id": 9,
+        "question": "What is the most popular payment method?",
+        "category": "aggregation",
+        "difficulty": "easy",
+        "expected_columns": ["payment_method", "count"],
+        "expected_sql_contains": ["COUNT", "payments", "payment_method"]
+    },
+    {
+        "id": 10,
+        "question": "Show the distribution of order statuses",
+        "category": "grouping",
+        "difficulty": "easy",
+        "expected_columns": ["status", "count"],
+        "expected_sql_contains": ["COUNT", "orders", "status"]
+    },
+    {
+        "id": 11,
+        "question": "Which category generated the highest profit?",
+        "category": "multi_table",
+        "difficulty": "hard",
+        "expected_columns": ["category", "profit"],
+        "expected_sql_contains": ["SUM", "products", "order_items", "cost"]
+    },
+    {
+        "id": 12,
+        "question": "What is the total revenue by country?",
+        "category": "multi_table",
+        "difficulty": "medium",
+        "expected_columns": ["country", "revenue"],
+        "expected_sql_contains": ["SUM", "customers", "orders", "country"]
+    },
+    {
+        "id": 13,
+        "question": "Show the number of new customers per month in 2025",
+        "category": "date_filtering",
+        "difficulty": "medium",
+        "expected_columns": ["month", "new_customers"],
+        "expected_sql_contains": ["COUNT", "customers", "signup_date", "2025"]
+    },
+    {
+        "id": 14,
+        "question": "What is the cancellation rate of orders?",
+        "category": "aggregation",
+        "difficulty": "medium",
+        "expected_columns": ["cancellation_rate"],
+        "expected_sql_contains": ["COUNT", "orders", "cancelled"]
+    },
+    {
+        "id": 15,
+        "question": "List the top 5 cities by number of orders",
+        "category": "ranking",
+        "difficulty": "medium",
+        "expected_columns": ["city", "order_count"],
+        "expected_sql_contains": ["COUNT", "customers", "orders", "city", "LIMIT 5"]
+    },
+    {
+        "id": 16,
+        "question": "What is the average number of items per order?",
+        "category": "aggregation",
+        "difficulty": "medium",
+        "expected_columns": ["avg_items"],
+        "expected_sql_contains": ["AVG", "COUNT", "order_items"]
+    },
+    {
+        "id": 17,
+        "question": "Show quarterly revenue for 2024",
+        "category": "date_filtering",
+        "difficulty": "medium",
+        "expected_columns": ["quarter", "revenue"],
+        "expected_sql_contains": ["SUM", "2024", "GROUP BY"]
+    },
+    {
+        "id": 18,
+        "question": "Which products have never been ordered?",
+        "category": "filtering",
+        "difficulty": "hard",
+        "expected_columns": ["product_name"],
+        "expected_sql_contains": ["products", "LEFT JOIN", "NULL"]
+    },
+    {
+        "id": 19,
+        "question": "What percentage of payments are completed vs pending?",
+        "category": "comparison",
+        "difficulty": "medium",
+        "expected_columns": ["payment_status", "percentage"],
+        "expected_sql_contains": ["COUNT", "payments", "payment_status"]
+    },
+    {
+        "id": 20,
+        "question": "Find the customer who spent the most money",
+        "category": "ranking",
+        "difficulty": "medium",
+        "expected_columns": ["name", "total_spent"],
+        "expected_sql_contains": ["SUM", "customers", "orders", "LIMIT 1"]
+    },
+    {
+        "id": 21,
+        "question": "Compare average order value between 2024 and 2025",
+        "category": "comparison",
+        "difficulty": "hard",
+        "expected_columns": ["year", "avg_order_value"],
+        "expected_sql_contains": ["AVG", "orders", "GROUP BY"]
+    },
+    {
+        "id": 22,
+        "question": "What is the total revenue from credit card payments?",
+        "category": "filtering",
+        "difficulty": "medium",
+        "expected_columns": ["total_revenue"],
+        "expected_sql_contains": ["SUM", "payments", "credit_card"]
+    },
+    {
+        "id": 23,
+        "question": "List products with price above $100",
+        "category": "filtering",
+        "difficulty": "easy",
+        "expected_columns": ["product_name", "price"],
+        "expected_sql_contains": ["products", "price", "100"]
+    },
+    {
+        "id": 24,
+        "question": "Show the top 3 categories by number of products sold",
+        "category": "ranking",
+        "difficulty": "medium",
+        "expected_columns": ["category", "units_sold"],
+        "expected_sql_contains": ["SUM", "products", "order_items", "LIMIT 3"]
+    },
+    {
+        "id": 25,
+        "question": "What is the profit margin for each category?",
+        "category": "multi_table",
+        "difficulty": "hard",
+        "expected_columns": ["category", "profit_margin"],
+        "expected_sql_contains": ["SUM", "products", "order_items", "cost", "price"]
+    },
+    {
+        "id": 26,
+        "question": "How many customers signed up in each quarter of 2024?",
+        "category": "date_filtering",
+        "difficulty": "medium",
+        "expected_columns": ["quarter", "customer_count"],
+        "expected_sql_contains": ["COUNT", "customers", "signup_date", "2024"]
+    },
+    {
+        "id": 27,
+        "question": "What is the total number of products in each category?",
+        "category": "grouping",
+        "difficulty": "easy",
+        "expected_columns": ["category", "product_count"],
+        "expected_sql_contains": ["COUNT", "products", "category"]
+    },
+    {
+        "id": 28,
+        "question": "Show daily orders for the last month of 2025",
+        "category": "date_filtering",
+        "difficulty": "hard",
+        "expected_columns": ["date", "order_count"],
+        "expected_sql_contains": ["COUNT", "orders", "2025", "12"]
+    },
+    {
+        "id": 29,
+        "question": "Which customer placed the most orders?",
+        "category": "ranking",
+        "difficulty": "medium",
+        "expected_columns": ["name", "order_count"],
+        "expected_sql_contains": ["COUNT", "customers", "orders", "LIMIT"]
+    },
+    {
+        "id": 30,
+        "question": "What is the revenue from completed orders only?",
+        "category": "filtering",
+        "difficulty": "easy",
+        "expected_columns": ["revenue"],
+        "expected_sql_contains": ["SUM", "orders", "completed"]
+    },
+    {
+        "id": 31,
+        "question": "Show revenue by payment method",
+        "category": "grouping",
+        "difficulty": "medium",
+        "expected_columns": ["payment_method", "revenue"],
+        "expected_sql_contains": ["SUM", "payments", "payment_method"]
+    },
+    {
+        "id": 32,
+        "question": "What are the least popular products by quantity sold?",
+        "category": "sorting",
+        "difficulty": "medium",
+        "expected_columns": ["product_name", "quantity_sold"],
+        "expected_sql_contains": ["SUM", "order_items", "products", "ASC"]
+    },
+    {
+        "id": 33,
+        "question": "What is the average time between signup and first order?",
+        "category": "multi_table",
+        "difficulty": "hard",
+        "expected_columns": ["avg_days"],
+        "expected_sql_contains": ["AVG", "customers", "orders", "signup_date", "order_date"]
+    },
+    {
+        "id": 34,
+        "question": "Show the top 5 countries by total revenue",
+        "category": "ranking",
+        "difficulty": "medium",
+        "expected_columns": ["country", "revenue"],
+        "expected_sql_contains": ["SUM", "customers", "orders", "country", "LIMIT 5"]
+    },
+    {
+        "id": 35,
+        "question": "How many customers have placed more than 5 orders?",
+        "category": "nested_query",
+        "difficulty": "hard",
+        "expected_columns": ["customer_count"],
+        "expected_sql_contains": ["COUNT", "HAVING", "5"]
+    },
+    {
+        "id": 36,
+        "question": "What is the refund rate?",
+        "category": "aggregation",
+        "difficulty": "medium",
+        "expected_columns": ["refund_rate"],
+        "expected_sql_contains": ["COUNT", "orders", "refunded"]
+    },
+    {
+        "id": 37,
+        "question": "Show the monthly trend of new customer signups",
+        "category": "date_filtering",
+        "difficulty": "medium",
+        "expected_columns": ["month", "signups"],
+        "expected_sql_contains": ["COUNT", "customers", "signup_date", "GROUP BY"]
+    },
+    {
+        "id": 38,
+        "question": "What is the most expensive product?",
+        "category": "sorting",
+        "difficulty": "easy",
+        "expected_columns": ["product_name", "price"],
+        "expected_sql_contains": ["products", "price", "DESC", "LIMIT 1"]
+    },
+    {
+        "id": 39,
+        "question": "Show the number of orders per status",
+        "category": "grouping",
+        "difficulty": "easy",
+        "expected_columns": ["status", "count"],
+        "expected_sql_contains": ["COUNT", "orders", "status", "GROUP BY"]
+    },
+    {
+        "id": 40,
+        "question": "What is the total revenue and profit for each product?",
+        "category": "multi_table",
+        "difficulty": "hard",
+        "expected_columns": ["product_name", "revenue", "profit"],
+        "expected_sql_contains": ["SUM", "products", "order_items", "cost"]
+    },
+    {
+        "id": 41,
+        "question": "Which customers from the United States spent more than $500?",
+        "category": "filtering",
+        "difficulty": "medium",
+        "expected_columns": ["name", "total_spent"],
+        "expected_sql_contains": ["customers", "orders", "United States", "500"]
+    },
+    {
+        "id": 42,
+        "question": "Show the ratio of credit card vs PayPal payments",
+        "category": "comparison",
+        "difficulty": "medium",
+        "expected_columns": ["payment_method", "count"],
+        "expected_sql_contains": ["COUNT", "payments", "payment_method"]
+    },
+    {
+        "id": 43,
+        "question": "What is the year-over-year revenue growth?",
+        "category": "comparison",
+        "difficulty": "hard",
+        "expected_columns": ["year", "revenue"],
+        "expected_sql_contains": ["SUM", "orders", "GROUP BY"]
+    },
+    {
+        "id": 44,
+        "question": "Find customers who have never placed an order",
+        "category": "nested_query",
+        "difficulty": "hard",
+        "expected_columns": ["name", "email"],
+        "expected_sql_contains": ["customers", "LEFT JOIN", "NULL"]
+    },
+    {
+        "id": 45,
+        "question": "What is the average product price by category?",
+        "category": "grouping",
+        "difficulty": "easy",
+        "expected_columns": ["category", "avg_price"],
+        "expected_sql_contains": ["AVG", "products", "category"]
+    },
+    {
+        "id": 46,
+        "question": "Show the top 10 most ordered products by quantity",
+        "category": "ranking",
+        "difficulty": "medium",
+        "expected_columns": ["product_name", "total_quantity"],
+        "expected_sql_contains": ["SUM", "order_items", "products", "LIMIT 10"]
+    },
+    {
+        "id": 47,
+        "question": "What percentage of orders have more than 3 items?",
+        "category": "nested_query",
+        "difficulty": "hard",
+        "expected_columns": ["percentage"],
+        "expected_sql_contains": ["COUNT", "order_items", "HAVING"]
+    },
+    {
+        "id": 48,
+        "question": "Show revenue per customer segment by country",
+        "category": "multi_table",
+        "difficulty": "medium",
+        "expected_columns": ["country", "revenue"],
+        "expected_sql_contains": ["SUM", "customers", "orders", "country", "GROUP BY"]
+    },
+    {
+        "id": 49,
+        "question": "What are the top 5 products by profit margin?",
+        "category": "ranking",
+        "difficulty": "hard",
+        "expected_columns": ["product_name", "profit_margin"],
+        "expected_sql_contains": ["products", "cost", "price", "LIMIT 5"]
+    },
+    {
+        "id": 50,
+        "question": "How does order count vary by day of the week?",
+        "category": "date_filtering",
+        "difficulty": "medium",
+        "expected_columns": ["day_of_week", "order_count"],
+        "expected_sql_contains": ["COUNT", "orders", "EXTRACT"]
+    },
+    {
+        "id": 51,
+        "question": "What is the customer retention rate across years?",
+        "category": "nested_query",
+        "difficulty": "hard",
+        "expected_columns": ["year", "returning_customers"],
+        "expected_sql_contains": ["COUNT", "DISTINCT", "customers", "orders"]
+    },
+    {
+        "id": 52,
+        "question": "Show the cumulative revenue over time",
+        "category": "nested_query",
+        "difficulty": "hard",
+        "expected_columns": ["date", "cumulative_revenue"],
+        "expected_sql_contains": ["SUM", "OVER", "ORDER BY"]
+    },
+    {
+        "id": 53,
+        "question": "What is the total revenue?",
+        "category": "aggregation",
+        "difficulty": "easy",
+        "expected_columns": ["total_revenue"],
+        "expected_sql_contains": ["SUM", "orders"]
+    },
+    {
+        "id": 54,
+        "question": "Which product categories have average price above $50?",
+        "category": "filtering",
+        "difficulty": "medium",
+        "expected_columns": ["category", "avg_price"],
+        "expected_sql_contains": ["AVG", "products", "category", "HAVING", "50"]
+    },
+    {
+        "id": 55,
+        "question": "Show the number of payments per month in 2025",
+        "category": "date_filtering",
+        "difficulty": "medium",
+        "expected_columns": ["month", "payment_count"],
+        "expected_sql_contains": ["COUNT", "payments", "payment_date", "2025"]
+    },
+    {
+        "id": 56,
+        "question": "What is the median order amount?",
+        "category": "aggregation",
+        "difficulty": "hard",
+        "expected_columns": ["median_amount"],
+        "expected_sql_contains": ["PERCENTILE_CONT", "total_amount"]
+    },
+    {
+        "id": 57,
+        "question": "Show customers with their total order count and total spending",
+        "category": "joins",
+        "difficulty": "medium",
+        "expected_columns": ["name", "order_count", "total_spent"],
+        "expected_sql_contains": ["COUNT", "SUM", "customers", "orders", "JOIN"]
+    },
+    {
+        "id": 58,
+        "question": "What is the total quantity sold per product?",
+        "category": "grouping",
+        "difficulty": "easy",
+        "expected_columns": ["product_name", "total_quantity"],
+        "expected_sql_contains": ["SUM", "order_items", "products", "quantity"]
+    },
+    {
+        "id": 59,
+        "question": "Find the month with the highest number of orders",
+        "category": "ranking",
+        "difficulty": "medium",
+        "expected_columns": ["month", "order_count"],
+        "expected_sql_contains": ["COUNT", "orders", "order_date", "LIMIT 1"]
+    },
+    {
+        "id": 60,
+        "question": "Show the average order value per country",
+        "category": "multi_table",
+        "difficulty": "medium",
+        "expected_columns": ["country", "avg_order_value"],
+        "expected_sql_contains": ["AVG", "customers", "orders", "country"]
+    },
+    {
+        "id": 61,
+        "question": "What is the weather today?",
+        "category": "out_of_scope",
+        "difficulty": "easy",
+        "expected_columns": [],
+        "expected_sql_contains": []
+    },
+    {
+        "id": 62,
+        "question": "Write me a poem about databases",
+        "category": "out_of_scope",
+        "difficulty": "easy",
+        "expected_columns": [],
+        "expected_sql_contains": []
+    },
+    {
+        "id": 63,
+        "question": "Rank products by their revenue within each category",
+        "category": "nested_query",
+        "difficulty": "hard",
+        "expected_columns": ["category", "product_name", "revenue", "rank"],
+        "expected_sql_contains": ["RANK", "OVER", "PARTITION BY", "products", "order_items"]
+    },
+    {
+        "id": 64,
+        "question": "What percentage of total revenue does each category represent?",
+        "category": "nested_query",
+        "difficulty": "hard",
+        "expected_columns": ["category", "revenue", "percentage"],
+        "expected_sql_contains": ["SUM", "products", "order_items"]
+    },
+    {
+        "id": 65,
+        "question": "Show the moving average of daily revenue for 2025",
+        "category": "nested_query",
+        "difficulty": "hard",
+        "expected_columns": ["date", "revenue", "moving_avg"],
+        "expected_sql_contains": ["AVG", "OVER", "ROWS", "orders"]
+    }
+]

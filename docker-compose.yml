@@ -1,0 +1,69 @@
+version: "3.9"
+
+services:
+  # ---------------------------------------------------------------------------
+  # PostgreSQL Database
+  # ---------------------------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: agenticsql
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ---------------------------------------------------------------------------
+  # FastAPI Backend
+  # ---------------------------------------------------------------------------
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://postgres:postgres@postgres:5432/agenticsql
+      - DATABASE_URL_READONLY=postgresql+psycopg2://postgres:postgres@postgres:5432/agenticsql
+      - LLM_PROVIDER=${LLM_PROVIDER:-openai}
+      - LLM_MODEL=${LLM_MODEL:-gpt-4o}
+      - LLM_API_KEY=${LLM_API_KEY}
+      - LLM_BASE_URL=${LLM_BASE_URL}
+      - LLM_TEMPERATURE=${LLM_TEMPERATURE:-0.0}
+      - MAX_RETRY_COUNT=${MAX_RETRY_COUNT:-3}
+      - MAX_RESULT_ROWS=${MAX_RESULT_ROWS:-1000}
+      - QUERY_TIMEOUT_SECONDS=${QUERY_TIMEOUT_SECONDS:-30}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # Streamlit Frontend
+  # ---------------------------------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "8501:8501"
+    environment:
+      - BACKEND_URL=http://backend:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  pgdata:
