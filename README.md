@@ -5,7 +5,7 @@
 > Ask questions about your business data in natural language. Get optimized SQL, interactive Plotly visualizations, statistical summaries, and plain-English explanations — automatically.
 
 ---
-
+## Deployed Link : https://agenticsqlcs.streamlit.app/
 ## 📸 Application Showcase
 
 ### 🖥️ Main Analytics Dashboard
